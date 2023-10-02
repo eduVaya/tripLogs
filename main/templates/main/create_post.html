@@ -1,0 +1,32 @@
+{% extends "main/base.html" %}
+{% block title %}Create a Post{% endblock title %}
+{% block content %}
+
+<form enctype="multipart/form-data" action="{% url 'main:create_post' %}" method="post">
+    {% csrf_token %}
+    <div class="mb-5">
+      <label class="form-label">Cover picture</label>
+      <input class="form-control" name="image" type="file" onchange="preview()">
+      <button onclick="clearImage()" class="btn btn-danger mt-3">Remove</button>
+  </div>
+  <img id="frame" src="" class="img-fluid" />
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input name="title" type="text" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label >Description</label>
+        <textarea name="description" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Post</button>
+  </form>
+  <script>
+    function preview() {
+        frame.src = URL.createObjectURL(event.target.files[0]);
+    }
+    function clearImage() {
+        document.getElementById('formFile').value = null;
+        frame.src = "";
+    }
+</script>
+{% endblock content %}

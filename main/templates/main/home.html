@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+{% block title %}Home Page{% endblock title %}
+{% block content %}
+<h1>Home Page</h1>
+<div class="row">
+    {% for post in posts %}
+    <div class="card col-sm-6 m-2" style="width: 18rem;">
+        {% if post.image %}
+            <img class="card-img-top" src="/media/{{post.image}}" alt="Card image cap">
+        {% else %}
+            <img class="card-img-top" src="/media/images/No-Image-Placeholder.svg.png" alt="Card image cap">
+        {% endif %}
+        
+        <div class="card-body">
+        <h5 class="card-title">{{post.title}}</h5>
+        <p class="card-text">{{post.description}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{post.author.username}}</li>
+        <li class="list-group-item">{{post.created_at}}</li>
+        </ul>
+        <div class="card-body">
+            {% if user == post.author %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" name="post-id" value="{{post.id}}">Delete</button>
+            </form>
+        {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p>No post yet :( </p>
+{% endfor %}
+</div>
+{% endblock content %}
