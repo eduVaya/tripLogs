@@ -1,24 +1,20 @@
 {% extends "main/base.html" %}
-{% block title %}Create a Post{% endblock title %}
+{% block title %}Create Entry{% endblock title %}
 {% block content %}
-
-<form enctype="multipart/form-data" action="{% url 'main:create_post' %}" method="post">
+<h1>Create Entry</h1>
+<form enctype="multipart/form-data" action="{% url 'main:create_entry' post.id %}" method="post">
     {% csrf_token %}
     <div class="mb-5">
-      <label class="form-label">Cover picture</label>
+      <label class="form-label">Entry picture</label>
       <input class="form-control" name="image" type="file" id="formFile" onchange="preview()">
       <button type="button" onclick="clearImage()" class="btn btn-danger mt-3">Remove</button>
   </div>
   <img id="frame" src="" class="img-fluid" />
     <div class="mb-3">
-      <label class="form-label">Title</label>
-      <input name="title" type="text" class="form-control">
-    </div>
-    <div class="mb-3">
         <label >Description</label>
         <textarea name="description" class="form-control"></textarea>
     </div>
-    <button type="submit" class="btn btn-success">Post</button>
+    <button type="submit" class="btn btn-success">Create Entry</button>
   </form>
   <script>
     function preview() {

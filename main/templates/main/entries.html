@@ -1,0 +1,10 @@
+{% extends "main/base.html" %}
+{% block title %}Entry Page{% endblock title %}
+{% block content %}
+<h1>Entry Page</h1>
+{% comment %} <a class="btn btn-success" href="/create_entry">Add entry</a> {% endcomment %}
+<a class="btn btn-success" href="{% url 'main:create_entry' post.id%}">Add entry</a>
+{% for entry in entries %}
+    <h1>{{entry.description}}</h1>
+{% endfor %}
+{% endblock content %}

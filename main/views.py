@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, PostForm
+from .forms import RegisterForm, PostForm, EntryForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from .models import Post
+from .models import Post, Entry
 
 @login_required(login_url="/login")
 def home(request):
@@ -27,6 +27,27 @@ def create_post(request):
         form = PostForm()
     return render(request, 'main/create_post.html', {"form": form})
 
+@login_required(login_url="/login")
+def entries(request, post_id):
+    post = Post.objects.get(id=post_id)
+    entries = Entry.objects.filter(post_id=post_id)
+    # print('entries', entries)
+    return render(request, 'main/entries.html', {"post":post,"entries":entries})
+
+def create_entry(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if request.method == 'POST':
+        entryForm = EntryForm(request.POST, request.FILES)
+        if entryForm.is_valid():
+            entry = entryForm.save(commit=False)
+            entry.post = post
+            entry.save()
+        return redirect(f'/entries/{post_id}')
+    else:
+        entryForm = EntryForm()
+    return render(request, 'main/create_entry.html', {"form": entryForm, "post": post})
+
+@login_required(login_url="/login")
 def sign_up(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
