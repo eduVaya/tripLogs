@@ -28,10 +28,11 @@
                 <form method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger" name="post-id" value="{{post.id}}">Delete</button>
+                    <a href="{% url 'main:update_post' post.id%}" class="btn btn-success">Edit</a>
                 </form>
-                {% comment %} <a href="/entries" class="btn btn-primary stretched-link">Go somewhere</a> {% endcomment %}
-                <a href="{% url 'main:entries' post.id%}" class="btn btn-primary stretched-link">Add entry</a>
             {% endif %}
+            <a href="{% url 'main:entries' post.id%}" class="btn btn-primary">See entries</a>
+        
         </div>
     </div>
     {% empty %}

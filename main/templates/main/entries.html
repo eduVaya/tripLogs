@@ -2,9 +2,32 @@
 {% block title %}Entry Page{% endblock title %}
 {% block content %}
 <h1>Entry Page</h1>
-{% comment %} <a class="btn btn-success" href="/create_entry">Add entry</a> {% endcomment %}
+<p>{{post.id}}</p>
+{% if user == post.author %}
 <a class="btn btn-success" href="{% url 'main:create_entry' post.id%}">Add entry</a>
-{% for entry in entries %}
-    <h1>{{entry.description}}</h1>
-{% endfor %}
+{% endif %}
+<div class="row">
+    {% for entry in entries %}
+        {% comment %} <h1>{{entry.description}}</h1> {% endcomment %}
+        <div class="card col-sm-6 m-2 p-0" style="width: 18rem;">
+            <img class="card-img-top" src="/media/{{entry.image}}" alt="Card image cap">
+            <div class="card-body">
+            <p class="card-text">{{entry.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{entry.created_at}}</li>
+            </ul>
+            <div class="card-body">
+                {% if user == entry.author %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" name="entry-id" value="{{entry.id}}">Delete</button>
+                </form>
+                <a href="" class="btn btn-primary stretched-link">Edit entry</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock content %}

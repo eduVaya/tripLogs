@@ -23,15 +23,19 @@ def create_post(request):
             post.author = request.user
             post.save()
             return redirect('/home')
-    else:
-        form = PostForm()
-    return render(request, 'main/create_post.html', {"form": form})
+    return render(request, 'main/create_post.html')
+
+@login_required(login_url="/login")
+def update_post(request, post_id):
+    # post = Post.objects.filter(id=post_id).first()
+    post = Post.objects.get(id=post_id)
+    print(post)
+    return render(request, 'main/create_post.html', {"post": post})
 
 @login_required(login_url="/login")
 def entries(request, post_id):
     post = Post.objects.get(id=post_id)
     entries = Entry.objects.filter(post_id=post_id)
-    # print('entries', entries)
     return render(request, 'main/entries.html', {"post":post,"entries":entries})
 
 def create_entry(request, post_id):
@@ -41,6 +45,7 @@ def create_entry(request, post_id):
         if entryForm.is_valid():
             entry = entryForm.save(commit=False)
             entry.post = post
+            entry.author = request.user
             entry.save()
         return redirect(f'/entries/{post_id}')
     else:
