@@ -27,9 +27,16 @@ def create_post(request):
 
 @login_required(login_url="/login")
 def update_post(request, post_id):
-    # post = Post.objects.filter(id=post_id).first()
     post = Post.objects.get(id=post_id)
-    print(post)
+    if request.method == 'POST':
+        post_form = PostForm(request.POST, request.FILES, instance=post)
+        if post_form.is_valid():
+            # post = post_form.save(commit=False)
+            # post.author = request.user
+            # post.save()
+            post_form.save()
+            return redirect('/home')
+    print(request)
     return render(request, 'main/create_post.html', {"post": post})
 
 @login_required(login_url="/login")

@@ -1,15 +1,24 @@
 {% extends "main/base.html" %}
 {% block title %}Create a Post{% endblock title %}
 {% block content %}
-<p>{{post}}</p>
+<p>{{post.image.url}}</p>
+{% if post %}
+<form enctype="multipart/form-data" action="{% url 'main:update_post' post.id %}" method="post">
+{% else %}
 <form enctype="multipart/form-data" action="{% url 'main:create_post' %}" method="post">
+{% endif %}
     {% csrf_token %}
     <div class="mb-5">
       <label class="form-label">Cover picture</label>
       <input class="form-control" name="image" type="file" id="formFile" onchange="preview()">
       <button type="button" onclick="clearImage()" class="btn btn-danger mt-3">Remove</button>
   </div>
+  {% if post.image %}
+  <img id="frame" src="{{post.image.url}}" class="img-fluid" />
+  {% else %}
   <img id="frame" src="" class="img-fluid" />
+  {% endif %}
+  
     <div class="mb-3">
       <label class="form-label">Title</label>
       {% if post %}
@@ -25,7 +34,6 @@
       <textarea name="description" class="form-control">{{post.description}}</textarea>
       {% else %}
       <textarea name="description" class="form-control"></textarea>
-
       {% endif %}    
     </div>
     <button type="submit" class="btn btn-success">Post</button>
