@@ -1,7 +1,6 @@
 {% extends "main/base.html" %}
 {% block title %}Create a Post{% endblock title %}
 {% block content %}
-<p>{{post.image.url}}</p>
 {% if post %}
 <form enctype="multipart/form-data" action="{% url 'main:update_post' post.id %}" method="post">
 {% else %}

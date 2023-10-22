@@ -18,11 +18,11 @@
             </ul>
             <div class="card-body">
                 {% if user == entry.author %}
-                <form method="post">
+                <form method="post" action="{% url 'main:delete_entry' entry.id %}" >
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger" name="entry-id" value="{{entry.id}}">Delete</button>
                 </form>
-                <a href="" class="btn btn-primary stretched-link">Edit entry</a>
+                <a href="{% url 'main:update_entry' entry.id%}" class="btn btn-primary">Edit entry</a>
             {% endif %}
         </div>
     </div>

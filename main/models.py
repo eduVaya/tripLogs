@@ -21,4 +21,4 @@ class Entry(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.post
+          return f"Entry {self.id}"
