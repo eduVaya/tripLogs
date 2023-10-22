@@ -69,6 +69,7 @@ def delete_entry(request, entry_id):
     post = Post.objects.get(id=entry.post_id)
     return render(request, 'main/entries.html', {"post":post,"entries":entries})
 
+@login_required(login_url="/login")
 def update_entry(request, entry_id):
     entry = Entry.objects.get(id=entry_id)
     post = Post.objects.get(id=entry.post_id)
