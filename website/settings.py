@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import dj_database_url
 import os
 from pathlib import Path
 
@@ -34,9 +34,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #third party
+    # third party
     'tailwind',
-    #my apps
+    # my apps
     'main.apps.MainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -87,10 +87,13 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'password',
         'HOST': 'localhost',  # Replace with your PostgreSQL server's address if necessary
-        'PORT': '5432',          # Leave empty to use the default PostgreSQL port (usually 5432)
+        # Leave empty to use the default PostgreSQL port (usually 5432)
+        'PORT': '5432',
     }
 }
 
+DATABASES["default"] = dj_database_url.parse(
+    "postgres://triplog_django_render_user:6LLlP1vOZ8NhNSzF0QJ41BFypeCZamw0@dpg-cl7r82n6e7vc73a01mqg-a.oregon-postgres.render.com/triplog_django_render")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

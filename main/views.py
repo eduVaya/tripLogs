@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from .models import Post, Entry
 
+
 @login_required(login_url="/login")
 def home(request):
     posts = Post.objects.all()
@@ -13,6 +14,7 @@ def home(request):
         if post and post.author == request.user:
             post.delete()
     return render(request, 'main/home.html', {"posts": posts})
+
 
 @login_required(login_url="/login")
 def create_post(request):
@@ -24,6 +26,7 @@ def create_post(request):
             post.save()
             return redirect('/home')
     return render(request, 'main/create_post.html')
+
 
 @login_required(login_url="/login")
 def update_post(request, post_id):
@@ -38,11 +41,13 @@ def update_post(request, post_id):
             return redirect('/home')
     return render(request, 'main/create_post.html', {"post": post})
 
+
 @login_required(login_url="/login")
 def entries(request, post_id):
     post = Post.objects.get(id=post_id)
     entries = Entry.objects.filter(post_id=post_id)
-    return render(request, 'main/entries.html', {"post":post,"entries":entries})
+    return render(request, 'main/entries.html', {"post": post, "entries": entries})
+
 
 @login_required(login_url="/login")
 def create_entry(request, post_id):
@@ -58,7 +63,8 @@ def create_entry(request, post_id):
     else:
         print('here')
         entryForm = EntryForm()
-    return render(request, 'main/create_entry.html', { "post": post})
+    return render(request, 'main/create_entry.html', {"post": post})
+
 
 @login_required(login_url="/login")
 def delete_entry(request, entry_id):
@@ -67,7 +73,8 @@ def delete_entry(request, entry_id):
         entry.delete()
     entries = Entry.objects.filter(post_id=entry.post_id)
     post = Post.objects.get(id=entry.post_id)
-    return render(request, 'main/entries.html', {"post":post,"entries":entries})
+    return render(request, 'main/entries.html', {"post": post, "entries": entries})
+
 
 @login_required(login_url="/login")
 def update_entry(request, entry_id):
@@ -78,10 +85,10 @@ def update_entry(request, entry_id):
         if entry_form.is_valid():
             entry_form.save()
             entries = Entry.objects.filter(post_id=post.id)
-            return render(request, 'main/entries.html', {"post":post,"entries":entries})
+            return render(request, 'main/entries.html', {"post": post, "entries": entries})
     return render(request, 'main/create_entry.html', {"post": post, "entry": entry})
 
-@login_required(login_url="/login")
+
 def sign_up(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -92,4 +99,4 @@ def sign_up(request):
     else:
         form = RegisterForm()
 
-    return render(request, 'registration/sign_up.html', {"form":form})
+    return render(request, 'registration/sign_up.html', {"form": form})
