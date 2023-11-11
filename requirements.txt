@@ -19,9 +19,9 @@ dbus-python==1.2.18
 distro==1.7.0
 # distro-info===1.1build1
 dj-database-url==2.1.0
-Django==4.2.5
-django-tailwind==3.6.0
-duplicity==0.8.21
+Django==3.2.23
+django-tailwind==2.2.2
+duplicity==1.2.3
 Eel==0.16.0
 evdev==1.4.0
 fasteners==0.14.1
