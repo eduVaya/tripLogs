@@ -23,12 +23,12 @@ MEDIA_URL = '/media/'
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ge91-+@!l!9sxrszgj*t)s%1xfm!yhod$#&$m5t2l-z+7eee84'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -91,9 +91,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-DATABASES["default"] = dj_database_url.parse(
-    "postgres://triplog_django_render_user:6LLlP1vOZ8NhNSzF0QJ41BFypeCZamw0@dpg-cl7r82n6e7vc73a01mqg-a.oregon-postgres.render.com/triplog_django_render")
+database_url = os.environ.get("DATABASE_URL")
+DATABASES["default"] = dj_database_url.parse(database_url)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
