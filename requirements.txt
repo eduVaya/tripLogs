@@ -104,6 +104,7 @@ gunicorn==21.2.0
 psycopg2-binary==2.9.7
 sqlparse==0.4.4
 typing_extensions==4.7.1
+Pillow==9.0.1
 
 # altgraph==0.17.4
 # # apturl==0.5.2
